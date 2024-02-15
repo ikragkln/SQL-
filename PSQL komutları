@@ -1,0 +1,23 @@
+PSQL KOMUTLARI
+ */PostgreSql'e bağlanmak için -- psql -U postgres
+Kullanıcıya ait şifre girildikten sonra 'help' komutu yazarak bu bilgilere ulaşabiliriz.
+Komutlar:  \copyright dağıtım koşulları için
+       \h SQL komutları hakkında yardım için
+       \? psql dahili komutlarının yardımı için
+       \g ya da noktalı virgül:  sorguyu çalıştırmak için
+       \q çıkmak için
+\l ya da \list komutuyla veritabanları listelenir.
+Örnek olarak 'dvdrental' veritabanına bağlanmak için  \c dvdrental  ya da  \connect dvdrental  komutlarını kullanırız.
+"Şu anda "dvdrental" veritabanına "postgres" kullanıcısı ile bağlısınız."Bu yazıyı gördükten sonra;
+bağlanılan dvdrental veritabanında bulunan tabloları listelemek için  \dt  komutunu kullanırız.
+"Actor" tablosunun detayları için  \d  actor komutunu kullanırız.
+Tablonun detaylarına ulaştığımızda SQL komutumuzu yazıp istediğimiz verileri ayıklayabiliriz. Komuttan sonra ; koymak önemlidir.
+Yukarı aşağı tuşlarıyla önceki komutlara ulaşılabilir. 2 kez ctrl+c'ye tıklarsak yeni sorgu için dvdrental ekranına tekrar yönlendirir.
+
+--Film tablosundan isminde (title) en az 2 tane 'a' harfi bulunan uzunluğu (length) 100'den büyük olan, replacement_cost 15'ten büyük 25'ten küçük olan ve rental_rate 2.99 a eşit olan verileri sırala.
+dvdrental=# SELECT * FROM film
+dvdrental-# WHERE (title ILIKE ('%a%a%')) AND (length > 100 ) AND (replacement_cost > 15 AND replacement_cost < 25 ) AND (rental_rate = 2.99);
+Komut geçmişini kaydetmek için : \s filename
+Sorgu hızını görmek için : \timing
+PSQL terminal ekranından çıkmak için : \q
+--https://www.postgresqltutorial.com/postgresql-administration/psql-commands/
