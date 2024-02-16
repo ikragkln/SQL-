@@ -1,5 +1,5 @@
 PSQL KOMUTLARI
- */PostgreSql'e bağlanmak için -- psql -U postgres
+psql -U postgres: PostgreSql'e bağlanmak için 
 Kullanıcıya ait şifre girildikten sonra 'help' komutu yazarak bu bilgilere ulaşabiliriz.
 Komutlar:  \copyright dağıtım koşulları için
        \h SQL komutları hakkında yardım için
