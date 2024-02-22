@@ -72,7 +72,7 @@ SELECT * FROM film
 WHERE (rental_rate BETWEEN 2 AND 4) AND (replacement_cost BETWEEN 10 AND 20);
 
 --IN
---OR değeri benzer işlevde kullanılır fakat çoklu değerler için IN clause pratiklik sağlar .The IN operator is a shorthand for multiple OR conditions.
+--OR değeri benzer işlevde kullanılır fakat çoklu değerler için IN clause pratiklik sağlar.The IN operator is a shorthand for multiple OR conditions.
 --Uzunluğu yalnızca 40,50,60 olan değerler için IN kullanırız.
 
 SELECT * FROM film
@@ -85,4 +85,65 @@ WHERE replacement_cost IN (10.99,12.99,20.99);
 
 SELECT * FROM film
 WHERE replacement_cost NOT IN (10.99,12.99,20.99);
+
+LIKE 
+--Filtreleyeceğimiz veriye benzerlerini filtrelemek için kullanırız
+--Baş harfi M ile başlayan veriler için
+SELECT * FROM customer
+WHERE first_name LIKE 'M%'
+-- % = % işareti yerinde ya herhangi bir karakter yoktur ya da birden fazla karakter vardır.Bu şekilde yer tutucu işlevi görür.Wildcard olarak isimlendirilir.
+--Son harfi y ile bitenler için
+SELECT * FROM customer
+WHERE first_name LIKE '%y'
+--% Bu yer tutucuyu nereye getirirsek
+-- aranan kriterde büyük küçük harf önemlidir.
+--   ' _ ' tek bir karakter için yer tutucu,wildcard
+SELECT * FROM customer
+WHERE first_name LIKE 'T_m'
+--
+~~ LIKE anlamına gelir . 
+--Return all customers from a city that contains the letter 'L'
+SELECT * FROM Customers
+WHERE city LIKE '%L%';
+--Return all customers that have "r" in the second position:
+SELECT * FROM Customers
+WHERE CustomerName LIKE '_r%';
+
+ILIKE 
+--case insensitive değildir
+~~* ILIKE anlamına gelir.
+!~~*  NOT ILIKE 
+ 
+SELECT * FROM customer
+WHERE first_name ~~* 'vi%'
+
+--WILDCARDS
+--https://www.w3schools.com/sql/sql_wildcards.asp
+ 
+--DISTINCT
+-- sütundaki birbirinden farklı değerleri sıralar.
+ 
+SELECT DISTINCT rental_rate FROM film
+ --rental rate sütunundaki farklı verileri sıralar
+
+--COUNT
+--İstenilen şartı saplayan kaç tane veri olduğununu gösterir
+ 
+SELECT COUNT (*) FROM actor
+WHERE first_name = 'Penelope'
+--
+SELECT COUNT (*) FROM actor
+WHERE first_name LIKE 'A%'
+ 
+SELECT COUNT (DISTINCT first_name) FROM actor
+--Actor tablosundaki birbirinden farklı değerlerin sayılarını verir.
+--COUNT tan sonraki parametre parantez içinde yazılır.
+ 
+SELECT COUNT(DISTINCT length) FROM film
+--birbirinden farklı kaç tane uzunluk olduğunu sayar.
+
+
+
+
+
 
