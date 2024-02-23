@@ -142,6 +142,29 @@ SELECT COUNT (DISTINCT first_name) FROM actor
 SELECT COUNT(DISTINCT length) FROM film
 --birbirinden farklı kaç tane uzunluk olduğunu sayar.
 
+--ORDER BY 
+--Seçilen verilerin sıralanması için kullanılır. ORDER BY 'dan sonra neye göre sıralanacağı belirtilir.Bu şekilde yapılan sıralama ASC (artan) yani varsayılan şeklindedir,sorgunun belirgin olması için ayrıca yazılabilir.
+--Ascending -- ASC - Artan
+--Descending -- DSC - Azalan
+--Alfabetik olarak sıralamak için (A-Z) = ASC , (Z-A) = DESC
+--Verilerin nasıl sıralanacağını belirlemeden önce koşulları belirlemek gerekir.Yani ORDER BY,WHERE'den sonra gelir.
+ 
+SELECT * FROM film
+ORDER BY title ASC;
+
+--Rental rate artan, length azalan , ve title A ile başlayan olacak şekilde koşulların gösterilmesini istersek
+
+SELECT title,rental_rate,length FROM film
+WHERE title LIKE 'A%'
+ORDER BY rental_rate ASC ,length DESC;
+
+
+--Rating G'ye eşit olanları uzunluğu azalan olacak şekilde sıralamak istersek;
+
+SELECT * FROM film
+WHERE rating='G'
+ORDER BY length DESC;
+
 
 
 
