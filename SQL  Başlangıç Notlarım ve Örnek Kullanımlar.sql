@@ -165,6 +165,24 @@ SELECT * FROM film
 WHERE rating='G'
 ORDER BY length DESC;
 
+-- Rating'in R'ye , rental_duration'ın  9'a eşit olduğu length'in ise azalan şekilde sıralandığı bir tablo için;
+
+SELECT * FROM film
+WHERE rating = 'R' AND rental_duration =9
+ORDER BY length DESC;
+
+--LIMIT , OFFSET
+--Limit clause ile sıralamak istediğmiz verilere bir sınır getiririz.
+
+--length artan şekilde,rental rate 4.99 a eşit ilk 10 veri için;
+
+SELECT * FROM film
+WHERE rental_rate= 4.99
+ORDER BY length ASC
+LIMIT 10;
+
+--Önce koşullamayı, sonra gruplamayı en son ise LIMIT kullanarak istediğimiz veri sayısını görüntüleyebiliriz.
+
 
 
 
