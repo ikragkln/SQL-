@@ -183,6 +183,11 @@ LIMIT 10;
 
 --Önce koşullamayı, sonra gruplamayı en son ise LIMIT kullanarak istediğimiz veri sayısını görüntüleyebiliriz.
 
+--Sütun ismini değiştirmek için FROM'dan önce AS clause kullanılır.Eğer sadece 10 veri gözüksün istiyorsak LIMIT ile sınırlarız--
+SELECT first_name AS  ad  FROM actor LIMIT 10
+
+
+
 
 
 
