@@ -6,12 +6,14 @@ Komutlar:  \copyright dağıtım koşulları için
        \? psql dahili komutlarının yardımı için
        \g ya da noktalı virgül:  sorguyu çalıştırmak için
        \q çıkmak için
-\l ya da \list : Veritabanlarını listeler.
-\c dvdrental ya da  \connect dvdrental :Örnek olarak 'dvdrental' veritabanına bağlanmak için kullanılan komutlardır.
+
 psql -d <db-name> -U <username> -W : Direkt olarak username ve database name bilgisiyle bağlanmak için kullanılan komuttur.
 -d : veritabanının ismi
 -U : bağlanmak isteyen kullanıcının adı
 -W : psql'in o kullanıcıya ait şifreyi sormasını sağlar
+
+\l ya da \list : Veritabanlarını listeler.
+\c dvdrental ya da  \connect dvdrental :Örnek olarak 'dvdrental' veritabanına bağlanmak için kullanılan komutlardır.
 "Şu anda "dvdrental" veritabanına "postgres" kullanıcısı ile bağlısınız."Bu yazıyı gördükten sonra;
 bağlanılan dvdrental veritabanında bulunan tabloları listelemek için  \dt  komutunu kullanırız.
 \d <dbname>  yani \d  actor :"Actor" tablosunun detayları için bu komutu kullanırız.
