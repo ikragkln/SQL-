@@ -145,7 +145,7 @@ SELECT COUNT(DISTINCT length) FROM film
 --ORDER BY 
 --Seçilen verilerin sıralanması için kullanılır. ORDER BY 'dan sonra neye göre sıralanacağı belirtilir.Bu şekilde yapılan sıralama ASC (artan) yani varsayılan şeklindedir,sorgunun belirgin olması için ayrıca yazılabilir.
 --Ascending -- ASC - Artan
---Descending -- DSC - Azalan
+--Descending -- DESC - Azalan
 --Alfabetik olarak sıralamak için (A-Z) = ASC , (Z-A) = DESC
 --Verilerin nasıl sıralanacağını belirlemeden önce koşulları belirlemek gerekir.Yani ORDER BY,WHERE'den sonra gelir.
  
@@ -171,7 +171,7 @@ SELECT * FROM film
 WHERE rating = 'R' AND rental_duration =9
 ORDER BY length DESC;
 
---LIMIT , OFFSET
+--LIMIT
 --Limit clause ile sıralamak istediğmiz verilere bir sınır getiririz.
 
 --length artan şekilde,rental rate 4.99 a eşit ilk 10 veri için;
@@ -184,12 +184,16 @@ LIMIT 10;
 --Önce koşullamayı, sonra gruplamayı en son ise LIMIT kullanarak istediğimiz veri sayısını görüntüleyebiliriz.
 
 --Sütun ismini değiştirmek için FROM'dan önce AS clause kullanılır.Eğer sadece 10 veri gözüksün istiyorsak LIMIT ile sınırlarız--
-SELECT first_name AS  ad  FROM actor LIMIT 10
+SELECT first_name AS  ad  FROM actor 
+LIMIT 10:
 
-
-
-
-
+--OFFSET 
+--Verileri sıralarken belirtiln sayı kadar veri atlanmasını sağlar.Örneğin ,lk 6 veriyi atlayıp sonrasındaki 4 verinin çıktısı için;
+SELECT * FROM country
+OFFSET 6 
+LIMIT 4;
+--PostgreSQL evaluates the OFFSET clause before the LIMIT clause. 
+--https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-limit/
 
 
 
