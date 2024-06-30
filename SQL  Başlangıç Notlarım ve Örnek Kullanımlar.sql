@@ -127,7 +127,7 @@ SELECT DISTINCT rental_rate FROM film
  --rental rate sütunundaki farklı verileri sıralar
 
 --COUNT
---İstenilen şartı saplayan kaç tane veri olduğununu gösterir
+--İstenilen şartı sağlayan kaç tane veri olduğununu gösterir.
  
 SELECT COUNT (*) FROM actor
 WHERE first_name = 'Penelope'
@@ -194,6 +194,27 @@ OFFSET 6
 LIMIT 4;
 --PostgreSQL evaluates the OFFSET clause before the LIMIT clause. 
 --https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-limit/
+
+--AGGREGATE FONKSİYONLAR
+--MAX; İlgili sütundaki en büyük değerin çıktısını verir.Örneğin en büyük replacement_cost için;
+SELECT MAX (replacement_cost) FROM film;
+--MIN; İlgili sütundaki en küçük değerin çıktısını verir.Örneğin en en küçük replacement_cost için;
+SELECT MIN (replacement_cost) FROM film;
+--AVG;Seçilen sütunun ortalamasını alır.Örneğin ortakam film uzunluğu (length) için;
+SELECT AVG (length) FROM film;
+--ROUND; Çıktıda virgül sonrası basamakta fazla 0 varsa ve daha az karakter görüntülemek istiyorsak ROUND kullanırız. İlk AVG fonksiyonu sonra görüntülemek istediğimiz karakter sayısını yazarız.
+SELECT ROUND (AVG (length),3) FROM film;
+--SUM; İlgili sütundaki verileri toplamak için;
+SELECT SUM (rental_rate) FROM film;
+--Film uzunluğu (length) en çok olan,(length) en az olan ve replacement cost değerlerinin toplamının çıktısını almak için;
+SELECT MAX (length), MIN (length), SUM (replacement_cost) FROM film;
+--rental_rate 0.99 olan en en uzun (length) film için
+SELECT MAX (length) FROM film
+WHERE rental_rate= 0.99;
+--rental_rate 0.99 ve 2.99 olan en uzun (length) film için;
+SELECT MAX (length) FROM film
+WHERE rental_rate IN (0.99,2.99);
+--AGGREGATE fonksiyonu kullanırken aynı zamanda başka bir sütunu görünteleyemeyiz.
 
 
 
