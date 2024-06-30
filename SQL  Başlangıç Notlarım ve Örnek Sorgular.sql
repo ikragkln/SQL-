@@ -216,5 +216,51 @@ SELECT MAX (length) FROM film
 WHERE rental_rate IN (0.99,2.99);
 --AGGREGATE fonksiyonu kullanırken aynı zamanda başka bir sütunu görünteleyemeyiz.
 
+--GROUP BY
+--Aynı sonuçları(MIN,MAX,AVG,SUM) veri kümesinin içindeki farklı kategorilerde de görmek istediğimizde kullanırız.2-3 değer için ayrı ayrı SELECT MAX(length) FROM film  WHERE rental_rate = 0.99; sorgusu yazabiliriz fakat 40 veya daha fazla değer için GROUP BY kullanırız.
+--SELECT anahtar kelimesinde bulunan sütunların GROUP BY anahtar kelimesi içerisinde bulunması gerekir.
+--Birbirinden farklı rental_rate değerlerinin en uzun film süresi için;
+SELECT rental_rate, MAX(length) FROM film
+GROUP BY rental_rate;
+--rentalrate---- max 
+--2.99	----------185
+--4.99	--------- 185
+--0.99 ----------184
+
+--Birbirinden farklı rental_rate değerlerinin sayısı için;
+SELECT rental_rate,COUNT(*) FROM film
+GROUP BY rental_rate;
+--Her bir ratinge göre film sayısı için;
+SELECT rating,COUNT(*) FROM film
+GROUP BY rating;
+--Her bir replacement costa karşılık gelen en kısa film için;
+SELECT replacement_cost, MIN(length) FROM film
+GROUP BY replacement_cost;
+--SELECT kısmına replacement cost yazmadan da sorgu çalışır ama hangi replacement costa hangi değerin denk geldiğini göremeyiz.
+--rc artan,rr azalan bir şekilde her bir farklı değere karşılık gelen min film süreleri için;
+SELECT replacement_cost,rental_rate, MIN(length) FROM film
+GROUP BY replacement_cost,rental_rate
+ORDER BY replacement_cost,rental_rate DESC;
+--aggregate fonksiyona göre de sıralanabilir.
+SELECT replacement_cost,rental_rate, MIN(length) FROM film
+GROUP BY replacement_cost,rental_rate
+ORDER BY MIN(length); 
+--Verileri grupla,sırala,sonra kaç veri gözükeceğini belirt.
+
+--HAVING
+--Gruplandırdığımız verilere koşul vermek için kullanılır.Gruplanmış veri üzerinden filtreleme yapar fakat WHERE verileri önce koşullandırır sonra gruplar.
+-- film sayısı 325ten fazla olan rental_rate sayısı;
+SELECT rental_rate, COUNT(*) FROM film
+GROUP BY rental_rate
+HAVING COUNT(*) > 325; 
+--Staff id sayısı 7300'den fazla;
+SELECT staff_id,COUNT(*) FROM payment
+GROUP BY staff_id
+HAVING COUNT(*) > 7300
+--Satış miktarı 100'den fazla müşteri sayısı için(artan olarak sıralanmış);
+SELECT customer_id,SUM(amount) FROM payment
+GROUP BY customer_id
+HAVING SUM(amount)>100
+ORDER BY SUM(amount) ASC;
 
 
