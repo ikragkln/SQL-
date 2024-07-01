@@ -278,3 +278,59 @@ SELECT CONCAT (first_name,' ',last_name ) AS isim_soyisim FROM actor;
 --sütun ismini boşluk kullanarak yazmak istiyorsak örneğin SELECT ProductName AS "My Great Products" şeklinde yazarız.
 --city verisinin karşısında id ve last updatei birlikte görmek istersek;
 SELECT city, CONCAT(country_id,', ',last_update) AS "id ve last update" FROM city;
+
+
+--CREATE TABLE
+--Databases>Create>Database
+--Sütunlara verilecek isim, sütunların veri tipi ve varsa sütunlarda bulunan kısıtlama yapıları girilir.
+CREATE TABLE <table_name> (
+ <column_name> <data_type> <constraints>,
+             .....
+ <column_name> <data_type> <constraints>;
+)
+
+--Author isimli bir tablo oluşturalım;
+CREATE TABLE author (
+	id SERIAL PRIMARY KEY,
+	first_name VARCHAR(50) NOT NULL,
+ last_name VARCHAR(50) NOT NULL,
+	email VARCHAR(100),
+	birthday DATE,
+)
+--INSERT INTO Tabloya veri girmek için kullanılır.
+--VALUES ile girilecek değerleri belirtiriz.
+INSERT INTO <table_name> (<column_name1>,<column_name2>,<column_name3>)
+VALUES
+	(column1value,column2value,column3value)
+ --Bu şekilde verileri gireriz
+ 
+INSERT INTO author(first_name, last_name, email, birthday)
+VALUES
+	('John', 'Stark', 'johnstark@gmail.com', '1980-12-20'),
+	('Con', 'Doe', 'condoe@gmail.com', '1992-05-15'),
+	('Michael', 'Smith', 'msmith@hotmail.com', '1985-09-03'),
+	('Emily', 'Jones', 'emily.jones@outlook.com', '1978-11-11'),
+	('Robert', 'Brown', 'rbrown@gmail.com', '1990-07-22'),
+	('Sarah', 'Wilson', 'sarahwilson@aol.com', '1983-03-08'),
+	('David', 'Taylor', 'david.taylor@gmail.com', '1975-01-29'),
+	('Laura', 'Miller', 'laura.miller@yahoo.com', '1988-04-14');
+
+--Yeni tablo oluşturacapımız zaman başka bir tablonun benzerini oluşturmak istiyorsak (sütun ismini kopyalar);
+CREATE TABLE author2 (LIKE author)
+--Author tablosundaki herhangi bir satırdaki veriyi author2'ye taşırken;
+INSERT INTO author2
+SELECT * FROM author
+WHERE first_name= 'Emily'
+
+--Verilerin tamamını kopyalamak istersek
+CREATE TABLE author3 (LIKE author)
+ 
+INSERT INTO author3 
+SELECT * FROM author;
+--Kısayolu ise;
+CREATE TABLE author3 AS
+SELECT * FROM author;
+
+--DROP tablo silmek için kullanılır. Hata mesajı almamak için yani olmayan bir tabloyu silmeye çalışırken çıkan hata mesajını almamak için IF EXISTS kullanırız.
+DROP TABLE IF EXISTS author4;
+
