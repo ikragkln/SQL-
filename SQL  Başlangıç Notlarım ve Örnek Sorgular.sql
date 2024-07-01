@@ -263,4 +263,18 @@ GROUP BY customer_id
 HAVING SUM(amount)>100
 ORDER BY SUM(amount) ASC;
 
+--AS
+--AS (ALIAS) anahtar kelimesi sayesinde sorgular sonucu oluşturduğumuz sanal tablo ve sütunlara geçici isimler verebiliriz.
+--An alias only exists for the duration of that query.
+-- first_name sütununu isim olarak last_name sütununu soyisim olarak geçici isimlendirmek için;
+SELECT first_name AS "isim" last_name AS "soyisim" FROM actor;
+--SELECT first_name isim, last_name soyisim FROM actor; Bu şekilde de yazabiliriz fakat daha anlaşılır olması için AS kullanırız.
+--Aggregate fonskiyonla birlikle kullanımı;
+SELECT COUNT(*) AS film_sayısı FROM film;
 
+--CONCAT
+--Sütun verilerini birleştirmek için kullanılır.
+SELECT CONCAT (first_name,' ',last_name ) AS isim_soyisim FROM actor;
+--sütun ismini boşluk kullanarak yazmak istiyorsak örneğin SELECT ProductName AS "My Great Products" şeklinde yazarız.
+--city verisinin karşısında id ve last updatei birlikte görmek istersek;
+SELECT city, CONCAT(country_id,', ',last_update) AS "id ve last update" FROM city;
