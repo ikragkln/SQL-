@@ -315,7 +315,7 @@ VALUES
 	('David', 'Taylor', 'david.taylor@gmail.com', '1975-01-29'),
 	('Laura', 'Miller', 'laura.miller@yahoo.com', '1988-04-14');
 
---Yeni tablo oluşturacapımız zaman başka bir tablonun benzerini oluşturmak istiyorsak (sütun ismini kopyalar);
+--Yeni tablo oluşturacağımız zaman başka bir tablonun benzerini oluşturmak istiyorsak (sütun ismini kopyalar);
 CREATE TABLE author2 (LIKE author)
 --Author tablosundaki herhangi bir satırdaki veriyi author2'ye taşırken;
 INSERT INTO author2
@@ -333,4 +333,38 @@ SELECT * FROM author;
 
 --DROP tablo silmek için kullanılır. Hata mesajı almamak için yani olmayan bir tabloyu silmeye çalışırken çıkan hata mesajını almamak için IF EXISTS kullanırız.
 DROP TABLE IF EXISTS author4;
+
+--Rastgele veriler elde etmek için,dummy data for sql;Mockaroo https://www.mockaroo.com/
+--blank: oluşturacağımız verinin ne kadar boş bırakılacağının yüzdesi
+--INSERT INTO ve VALUES formülleriyle tabloya ekle
+--UPDATE
+--Tablodaki verileri güncelleriz.
+UPDATE <tablo_adı>
+SET <sütun_adı> = değer, 
+    <sütun_adı> = değer,
+    ----
+WHERE <koşul_adı>;
+
+--Örneğin isim ve soyismi değiştirmek istersek
+UPDATE author
+SET first_name = 'Alina',
+last_name ='Koraki'
+WHERE id =5 
+--RETURNING * ile değiştirdiğimiz satırları anlık görüntüleriz
+UPDATE author
+SET first_name= 'update'
+WHERE id=4
+RETURNING * ;
+
+--DELETE
+DELETE FROM <tablo_adı>
+WHERE <koşul_adı>;
+--idsi 4 olan veriyi silmek istersek;
+DELETE FROM author
+WHERE id= 4
+--3'ten küçük satırları silmek istersek
+DELETE FROM author
+WHERE id < 3 
+RETURNING * ;
+
 
