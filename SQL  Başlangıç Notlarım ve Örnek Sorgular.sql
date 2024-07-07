@@ -539,6 +539,77 @@ SET NOT NULL
 -- komutunu gireriz.
 --NULL bilinmeyen eksik bir veridir 0 değildir.
 
+-UNIQUE
+--O sütundaki verilerin birbrinden farklı olmaısnı istediğimiz zaman kullanırız.
+--Örnek olarak tabloya başka verinin aynısını ekleyelim;
+insert into users2 (username,email)
+values 
+('tester','tester@gmail.com')
+SELECT * FROM users2 ;
+--Tabloyu sıfırdan oluşturacak olursak CREATE TABLE sorgusunda email VARCHAR(50) UNIQUE şeklinde yazabiliriz fakat zaten elimşzde olan tabloda değişiklik yapmak istersek;
+ALTER TABLE users2
+ADD UNIQUE (email);
+--Tablomuza 2 aynı veri eklediğimiz için hata verdi.Bu yüzden aynı olan verimize çift tıklayıp değiştiriyoruz sonra F6 ya basıyoruz. Sonrasında aşağıdaki sorguyu çalıştırıyoruz.
+ALTER TABLE users2
+ADD UNIQUE(email);
+-- PRIMARY KEY kısıtlaması kendiliğinden UNIQUE kısıtlamasına sahiptir
 
+--CHECK
+-- It allows you to specify that the value in a certain column must satisfy a Boolean (truth-value) expression.
+--Age (yaş) olarak belirlediğimiz bir sütuna negatif değerler verebiliriz veya web portaline üye olan kullanıcıların yaşlarının 18 yaşından büyük olması gibi kendi senaryolarımıza uygun başka kıstlamalar da vermek isteyebiliriz.
+--You can also give the constraint a separate name. This clarifies error messages and allows you to refer to the constraint when you need to change it. The syntax is:
+CREATE TABLE products (
+    product_no integer,
+    name text,
+    price numeric CONSTRAINT positive_price CHECK (price > 0)
+);
+--. Say you store a regular price and a discounted price, and you want to ensure that the discounted price is lower than the regular price
 
+CREATE TABLE products (
+    product_no integer,
+    name text,
+    price numeric CHECK (price > 0),
+    discounted_price numeric CHECK (discounted_price > 0),
+   
+);
 
+INSERT INTO products (product_no,name,price,discounted_price)
+VALUES ( 1,'test product', 20 , 15);
+SELECT * FROM products
+	---------
+--XX INSERT INTO products (product_no,name,price,discounted_price)
+VALUES ( 1,'test product', 10 , 15);
+SELECT * FROM products--XX (HATA VERİR) ----------> Bu kısıttan dolayı hata verir CHECK (price > discounted_price).
+--------
+
+----ALSOOO
+CREATE TABLE products (
+    product_no integer,
+    name text,
+    price numeric CHECK (price > 0),
+    discounted_price numeric,
+    CHECK (discounted_price > 0 AND price > discounted_price)
+);
+
+------------
+----CHECK için ayrı bir örnek;
+INSERT INTO users2 (username,email,age)
+VALUES(
+	'gamer30','gamer30@gmail.com','-22'
+);
+SELECT * FROM users2;
+--ile -22 yaş olan veri ekleyelim
+
+--Sonrasında yaşın 18'den büyük olması koşulunu ekleyelim.
+ALTER TABLE users2
+ADD CHECK (age>18)
+--Daha önce yaş verisine -22 girdiğimiz için hata alırız.
+	
+--22 yaş verisini sildikten sonra CHECK koşulunu uygulayabiliriz.
+DELETE FROM users2
+WHERE age=-22
+RETURNING *;
+-
+ALTER TABLE users2
+ADD CHECK (age>18)
+--Koşulumuz bu şekilde tanımlanır.
