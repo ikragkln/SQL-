@@ -56,4 +56,57 @@ insert into employee (id, name, birthday, email) values (47, 'Alaric Gerlack', '
 insert into employee (id, name, birthday, email) values (48, 'Hillier Triggol', '2001-05-11', 'htriggol1b@unesco.org');
 insert into employee (id, name, birthday, email) values (49, 'Ansley Spellacy', '2002-10-08', 'aspellacy1c@telegraph.co.uk');
 insert into employee (id, name, birthday, email) values (50, 'Genevra Houliston', '2000-08-27', 'ghouliston1d@blogspot.com');
---
+
+--Sütunların her birine göre diğer sütunları güncelleyecek 5 adet UPDATE işlemi yapalım.
+UPDATE employee
+SET name = 'Adella Dollen',
+	birthday= '2002-12-03' 
+WHERE id=5
+RETURNING *;
+----------------------------------------
+UPDATE employee
+SET name = 'Garth Burgin',
+	birthday= '2002-DEC-16' 
+WHERE id=6
+RETURNING *;
+----------------------------------------
+UPDATE employee
+SET name = 'Igor Whiteman',
+	birthday= '2002-JAN-19' 
+WHERE id=10
+RETURNING *;
+----------------------------------------
+UPDATE employee
+SET email = 'Invalid email'
+WHERE email LIKE '%.jp'
+RETURNING *;
+----------------------------------------
+UPDATE employee
+SET birthday = '2002-DEC-23',
+	name='İkra Fatma Gökoğlan'
+WHERE name LIKE 'Fonz%'
+RETURNING *;
+
+--Sütunların her birine göre ilgili satırı silecek 5 adet DELETE işlemi yapalım.
+DELETE FROM employee
+WHERE email='Invalid email'
+RETURNING *;
+----------------------------------------
+DELETE FROM employee
+WHERE name LIKE 'D%'
+RETURNING * ;
+----------------------------------------
+DELETE FROM employee
+WHERE birthday='2002-09-06'
+RETURNING * ;
+----------------------------------------
+DELETE FROM employee
+WHERE id=8
+RETURNING * ;	
+----------------------------------------
+DELETE FROM employee
+WHERE id=4
+RETURNING * ;	
+
+
+
