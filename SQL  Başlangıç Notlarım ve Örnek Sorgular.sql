@@ -86,7 +86,7 @@ WHERE replacement_cost IN (10.99,12.99,20.99);
 SELECT * FROM film
 WHERE replacement_cost NOT IN (10.99,12.99,20.99);
 
-LIKE 
+--LIKE 
 --Filtreleyeceğimiz veriye benzerlerini filtrelemek için kullanırız
 --Baş harfi M ile başlayan veriler için
 SELECT * FROM customer
@@ -109,7 +109,7 @@ WHERE city LIKE '%L%';
 SELECT * FROM Customers
 WHERE CustomerName LIKE '_r%';
 
-ILIKE 
+--ILIKE 
 --case insensitive değildir
 ~~* ILIKE anlamına gelir.
 !~~*  NOT ILIKE 
@@ -141,6 +141,9 @@ SELECT COUNT (DISTINCT first_name) FROM actor
  
 SELECT COUNT(DISTINCT length) FROM film
 --birbirinden farklı kaç tane uzunluk olduğunu sayar.
+
+--Örneğin STATION tablosunda CITY sayısından, birbirinden farklı CITY sayısının farkını bulmak istersek;
+SELECT (COUNT(CITY)-COUNT(DISTINCT CITY)) FROM STATION;
 
 --ORDER BY 
 --Seçilen verilerin sıralanması için kullanılır. ORDER BY 'dan sonra neye göre sıralanacağı belirtilir.Bu şekilde yapılan sıralama ASC (artan) yani varsayılan şeklindedir,sorgunun belirgin olması için ayrıca yazılabilir.
@@ -337,6 +340,8 @@ DROP TABLE IF EXISTS author4;
 --Rastgele veriler elde etmek için,dummy data for sql;Mockaroo https://www.mockaroo.com/
 --blank: oluşturacağımız verinin ne kadar boş bırakılacağının yüzdesi
 --INSERT INTO ve VALUES formülleriyle tabloya ekle
+
+
 --UPDATE
 --Tablodaki verileri güncelleriz.
 UPDATE <tablo_adı>
@@ -369,9 +374,24 @@ RETURNING * ;
 
 --PRIMARY KEY (Birincil Anahtar)
 --O satırda bulunan asıl veriyi diğer verilerden ayrıştırabileceğimiz bir tanımlayıcıya ihtiyaç duyarız bu yüzden primary key kullanırız.
-
+--Benzersiz olmalı.Bir tabloda 1 tane primary key bulunur.
+CREATE TABLE order_items(
+  order_id INT, 
+  item_no SERIAL, 
+  item_description VARCHAR NOT NULL, 
+  quantity INTEGER NOT NULL, 
+  price DEC(10, 2), 
+  PRIMARY KEY (order_id, item_no)
+);
+--Bu şekilde sonda da belirtilebilir.
+--Sonradan PRIMARY KEY belirlemek istersek ;
+ALTER TABLE products 
+ADD PRIMARY KEY (product_id);
 --FOREIGN KEY
 --Başka bir tablodaki primary key sütununu referans olarak gösterebiliriz.
+--Bir tabloda birden fazla sütun FK olarak tanımlanabilir.
+--Aynı sütunun içerisinde aynı değerler bulunabilir.
+
 
 CREATE TABLE book (
 	id SERIAL PRIMARY KEY,
@@ -402,6 +422,7 @@ SELECT * FROM book
 JOIN author ON author.id = book.author_id
 
 --VERİ TİPLERİ
+--https://www.postgresql.org/docs/13/datatype.html
 --Hangi tip verileri yazacağımızı belirler.
 --Postgresql 16 data types
 --1 byte=8 bit, 2 byte=16 bit( en fazla 2^16 veri aralığı vardır yani 65536 civarına kadar değer alabilir.)
