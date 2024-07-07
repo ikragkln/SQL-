@@ -367,4 +367,157 @@ DELETE FROM author
 WHERE id < 3 
 RETURNING * ;
 
+--PRIMARY KEY (Birincil Anahtar)
+--O satırda bulunan asıl veriyi diğer verilerden ayrıştırabileceğimiz bir tanımlayıcıya ihtiyaç duyarız bu yüzden primary key kullanırız.
+
+--FOREIGN KEY
+--Başka bir tablodaki primary key sütununu referans olarak gösterebiliriz.
+
+CREATE TABLE book (
+	id SERIAL PRIMARY KEY,
+	title VARCHAR(100) NOT NULL,
+	page_number INTEGER NOT NULL,
+	author_id INTEGER REFERENCES author(id)
+)
+
+INSERT INTO book (title,page_number,author_id) VALUES ('White Banners',62,6);
+INSERT INTO book (title,page_number,author_id) VALUES ('Saving Shilah',580,10);
+INSERT INTO book (title,page_number,author_id) VALUES ('Abe Lincoln in illinois',105,5);
+INSERT INTO book (title,page_number,author_id) VALUES ('Apache Terriority',286,5);
+INSERT INTO book (title,page_number,author_id) VALUES ('Out 1: Spectre',402,45);
+INSERT INTO book (title,page_number,author_id) VALUES ('Trials of Muhammed Ali',164,50);
+INSERT INTO book (title,page_number,author_id) VALUES ('BUSTED (Everybody Loves Sunshine',84,10);
+INSERT INTO book (title,page_number,author_id) VALUES ('Father Sergius',265,9);
+INSERT INTO book (title,page_number,author_id) VALUES ('White Banners',62,29);
+INSERT INTO book (title,page_number,author_id) VALUES ('Thirty Seconds over Tokyo',586,33);
+INSERT INTO book (title,page_number,author_id) VALUES ('Cutie Honey',238,8);
+INSERT INTO book (title,page_number,author_id) VALUES ('Baby on Board',339,7)
+
+--author id'si 1 olan kitapları görmek istersek
+SELECT * FROM book
+WHERE author_id=1
+
+--Kitap bilgileri yanısıra yazarların da bilgilerini görmek istersek JOIN sorgusunu kullanırız. Eşleşme; author tablosundan id, book tablosundan author_id olacak şekilde;
+SELECT * FROM book
+JOIN author ON author.id = book.author_id
+
+--VERİ TİPLERİ
+--Hangi tip verileri yazacağımızı belirler.
+--Postgresql 16 data types
+--1 byte=8 bit, 2 byte=16 bit( en fazla 2^16 veri aralığı vardır yani 65536 civarına kadar değer alabilir.)
+--SMALLINT(-32768 to +32768),INTEGER(4 bytes),BIGINT(8 bytes)
+--SERIAL- tam sayı, otomatik artan,daima pozitif
+--REAL  8 basamak,virgülden sonra 6. basamağı yuvarlar.DOUBLE PRECISION 15.basamaktan sonra yuvarlar.16 basamak,NUMERIC sayının kendisi
+	
+CREATE TABLE test (
+	real_type REAL,
+	double_type DOUBLE PRECISION,
+	numeric_type NUMERIC );
+INSERT INTO test 
+VALUES
+	(1.123456789123456789,
+	1.123456789123456789,
+	1.123456789123467897
+);
+--
+CREATE TABLE test3 (
+	float4_type FLOAT4,
+	float8_type FLOAT8, 
+	decimal_type DECIMAL );
+INSERT INTO test3
+VALUES
+	(1.123456789123456789,
+	1.123456789123456789,
+	1.123456789123456789
+);
+	
+--FLOAT4 = REAL
+--FLOAT8=DOUBLE PRECISION
+--DECIMAL=NUMERIC
+
+--SELECT (1.444444444444::DOUBLE PRECISION)
+
+--CHARACTER TYPES
+--VARCHAR (10) yazarsak 10 karaktere kadar veri yazabiliriz.
+--CHAR (10) sabit karakter sayısını ifade eder. 5 karakter yazarsak geri kalan karakteri boşlukla doldurur.
+--TEXT herhangi bir kısıt yoktur.(unlimited)
+--Karakter tiplerini test etmek için direkt SELECT komutunu kullanabiliriz.
+SELECT ('Paris'::CHAR(15))
+SELECT ('PradaK5'::VARCHAR(5))
+
+--BOOLEAN TYPES
+--TRUE:true,yes,on,1,t
+--FALSE: false,no,off,0,f
+--FALSE çıktısı veren sorgular
+SELECT('0':: BOOLEAN);
+SELECT('no':: BOOLEAN);
+SELECT('off':: BOOLEAN);
+--TRUE çıktısı veren sorgular
+SELECT('1':: BOOLEAN);
+SELECT('yes':: BOOLEAN);
+SELECT('on':: BOOLEAN);
+--
+--NULL çıktısı için;
+SELECT (NULL::BOOLEAN)
+
+--DATE TYPES
+SELECT('1990-05-25':: DATE);
+SELECT('DEC-03-1980':: DATE);
+SELECT('DEC 03 1980':: DATE);
+SELECT('1990 December 19'::DATE);
+
+--TIME TYPES
+SELECT ('03:40 AM':: TIME)
+SELECT ('03:40 PM':: TIME)
+SELECT ('03:40':: TIME)
+SELECT ('03:40:10':: TIME)
+-
+SELECT ('03:40':: TIME WITH THE TIME ZONE) 
+çıktı:"03:40:00+03:00"
+
+--Tarih ve Zamanı aynı anda göstermek istersek;
+SELECT ('1990 December 05 03:40:10':: TIMESTAMP)
+SELECT ('1990 DEC 12 03:40:10'::TIMESTAMP WITH TIME ZONE)
+
+SELECT ('1990 DEC 12 03:40:10'::INTERVAL)
+--"19900 years 12 days 03:40:10"
+
+
+--NOT NULL - ALTER
+CREATE TABLE users2 (
+	id SERIAL PRIMARY KEY,
+	username VARCHAR(20),
+	email VARCHAR(50),
+	age INTEGER
+);
+SELECT * FROM users2;
+
+INSERT INTO users2 (username,email,age)
+VALUES (
+	'tester','tester@gmail.com','23'
+)
+
+INSERT INTO users2(email,age)
+VALUES (
+	'gester@gmail.com','23'
+)
+
+--username null olarak gözükür eğer username sütunun boş olmamasını istiyorsak NOT NULL kullanırız.CREATE TABLE kısmında belirttiğimiz komutları güncellerken 
+--'users2' already exists hatası alırız.Bu sorunla karşılaşmadan kısıt eklemek istersek ALTER kullanılırız.
+ALTER TABLE users2
+ALTER COLUMN username
+SET NOT NULL
+--başta null veri girdiğimiz için hata verdi o yüzden username null olan verileri silebiliriz.
+DELETE FROM users2 
+WHERE username IS NULL 
+RETURNING *; 
+--sonrasında 
+ALTER TABLE users2
+ALTER COLUMN username
+SET NOT NULL
+-- komutunu gireriz.
+--NULL bilinmeyen eksik bir veridir 0 değildir.
+
+
+
 
