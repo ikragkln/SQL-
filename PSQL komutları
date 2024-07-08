@@ -28,3 +28,64 @@ dvdrental-# WHERE (title ILIKE ('%a%a%')) AND (length > 100 ) AND (replacement_c
 \! cls : Ekranı temizler.
 \q : PSQL terminal ekranından çıkmak için kullanılır. 
 --https://www.postgresqltutorial.com/postgresql-administration/psql-commands/
+
+
+
+--PSQL ile PostgreSQL'e host, port, kullanıcı adı ve veritabanı ismi ile bağlanmak için:
+psql -h <host_name> -p <port_name> -U <kullanıcı_adı> <veritabanı_adı>
+
+--Tabloda sütun ismini yanlış yazarsak sonradan değiştirmek için :ALTER TABLE users  RENAME COLUMN birtday TO birthday;
+--Sonradan username UNIQUE yapmak istersek;
+
+testdb=# SELECT * FROM users;
+ id |   username    |  birthday
+----+---------------+------------
+  1 | elapenna0     | 2023-08-29
+  2 | phamlin1      | 2024-04-02
+  3 | rcrab2        | 2023-07-29
+  4 | crestall3     | 2023-08-02
+  5 | pdobsons4     | 2024-05-02
+  6 | mneilands5    | 2023-08-17
+  7 | doram6        | 2023-07-17
+  8 | kglasner7     | 2023-07-28
+  9 | minnman8      | 2024-02-08
+ 10 | ckleinbaum9   | 2024-02-11
+ 11 | dthoumasa     | 2023-11-07
+ 12 | gmedwellb     | 2024-04-08
+ 13 | uhuffeyc      | 2024-03-15
+ 14 | bianned       | 2024-02-16
+ 15 | rhalliwelle   | 2024-02-23
+ 16 | mquinnellyf   | 2024-01-06
+ 17 | apatterfieldg | 2023-10-10
+ 18 | hvidoh        | 2024-04-05
+ 19 | tleaki        | 2023-08-13
+ 20 | lcrepelj      | 2023-10-01
+ 21 | cfaulok       | 2023-11-25
+ 22 | rferrimanl    | 2023-10-13
+ 23 | rwinsorm      | 2023-12-11
+ 24 | jhallenn      | 2024-03-29
+ 25 | mnewbando     | 2024-01-22
+ 26 | rwolpertp     | 2023-10-21
+^CCancel request sent
+
+-----------Denemek için username aynı 2 veri girdik.---------
+testdb=# insert into users (id, username, birthday) values (51, 'ddimaria1d', '2024-04-22');
+INSERT 0 1
+
+testdb=# SELECT * FROM users WHERE username= 'ddimaria1d';
+ id |  username  |  birthday
+----+------------+------------
+ 50 | ddimaria1d | 2024-04-22
+ 51 | ddimaria1d | 2024-04-22
+(2 sat²r)
+
+testdb=# ALTER TABLE users ADD CONSTRAINT unique_username UNIQUE(username);
+ALTER TABLE
+testdb=# UPDATE users SET username ='Pincuss' WHERE id=51;
+UPDATE 1
+
+--Bu kısıtı güncelledikten sonra aynı veri yüklemeye çalıştığımızda hata veriyorsa sorun yok.
+testdb=# insert into users (id, username, birthday) values (51, 'ddimaria1d', '2024-04-22');
+ERROR:  duplicate key value violates unique constraint "users_pkey"
+AYRINTI:  Key (id)=(51) already exists.
+testdb=#
