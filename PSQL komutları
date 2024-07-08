@@ -89,3 +89,5 @@ testdb=# insert into users (id, username, birthday) values (51, 'ddimaria1d', '2
 ERROR:  duplicate key value violates unique constraint "users_pkey"
 AYRINTI:  Key (id)=(51) already exists.
 testdb=#
+
+--https://www.postgresqltutorial.com/postgresql-administration/psql-commands/
