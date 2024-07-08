@@ -15,7 +15,7 @@ psql -d <db-name> -U <username> -W : Direkt olarak username ve database name bil
 \l ya da \list : Veritabanlarını listeler.
 \c dvdrental ya da  \connect dvdrental :Örnek olarak 'dvdrental' veritabanına bağlanmak için kullanılan komutlardır.
 "Şu anda "dvdrental" veritabanına "postgres" kullanıcısı ile bağlısınız."Bu yazıyı gördükten sonra;
-bağlanılan dvdrental veritabanında bulunan tabloları listelemek için  \dt  komutunu kullanırız.
+bağlanılan dvdrental veritabanında bulunan tabloları listelemek için  \dt  komutunu kullanırız.\d+ <tablo adı> tablo sütun bilgleri ve kısıtlarını gösterir.
 \d <dbname>  yani \d  actor :"Actor" tablosunun detayları için bu komutu kullanırız.
 Tablonun detaylarına ulaştığımızda SQL komutumuzu yazıp istediğimiz verileri ayıklayabiliriz. Komuttan sonra ; koymak önemlidir.
 Yukarı aşağı tuşlarıyla önceki komutlara ulaşılabilir. 2 kez ctrl+c'ye tıklarsak yeni sorgu için dvdrental ekranına tekrar yönlendirir.
