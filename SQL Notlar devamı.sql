@@ -37,6 +37,16 @@ LEFT JOIN book
 ON author.id = book.author_id
 --Tüm verileri isteyeceğimiz tablo 1. tabloysa left join 2.tabloysa right join kullanılır.
 
+--FULL JOIN
+--Birleştirme iki tablo üzerinden gerçekleşir Tablo 1 de olup Tablo 2 de olmayan ve Tablo 2 de olup Tablo 1 de olmayan veriler için NULL değeri kullanılır.
+SELECT * FROM author
+FULL OUTER JOIN book
+ON author.id = book.author_id
+WHERE (book.id IS NOT NULL AND author.id IS NOT NULL);
 
-
-
+--Tablolardaki ortak olmayan verileri görmek için bu senaryoyu kullanırız;
+SELECT * FROM author
+FULL OUTER JOIN book
+ON author.id = book.author_id
+WHERE (book.id IS NULL OR author.id IS NULL);
+--FULL OUTER JOIN and FULL JOIN are the same
