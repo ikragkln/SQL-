@@ -50,3 +50,20 @@ FULL OUTER JOIN book
 ON author.id = book.author_id
 WHERE (book.id IS NULL OR author.id IS NULL);
 --FULL OUTER JOIN and FULL JOIN are the same
+
+--UNION
+--SELECT ile, elde ettiğimiz birden fazla sorguyu birleştirir tek bir sonuç kümesi haline getiririz.
+--bookstore veritabanında iki adet sorgu yapıyoruz. İlk sorgumuzda sayfa sayısı en fazla olan 5 kitabı, ikinci sorgumuzda ise isme göre 5 kitabı sıralıyoruz.
+--UNION anahtar kelimesi sayesinde bu iki sorguyu da birleştirebiliriz.
+--Sütun sayıları aynı olması yanında bu sütunlardaki veri tiplerinin de aynı olması gerekmektedir.
+--UNION: Only distinct values (benzersiz verileri girer)  UNION ALL: duplicates values also(aynı verileri de alır)
+( SELECT * FROM book
+ORDER BY title
+LIMIT 5
+)
+UNION
+(
+SELECT * FROM book
+ORDER BY page_number DESC
+LIMIT 5
+);
