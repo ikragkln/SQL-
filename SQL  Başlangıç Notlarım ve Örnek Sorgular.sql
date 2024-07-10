@@ -478,8 +478,14 @@ SELECT('1':: BOOLEAN);
 SELECT('yes':: BOOLEAN);
 SELECT('on':: BOOLEAN);
 --
+
+
 --NULL çıktısı için;
 SELECT (NULL::BOOLEAN)
+---Select all records from the Customers where the PostalCode column is empty;
+SELECT * FROM Customers
+WHERE PostalCode is NULL;
+
 
 --DATE TYPES
 SELECT('1990-05-25':: DATE);
