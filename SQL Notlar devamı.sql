@@ -92,3 +92,43 @@ LIMIT 5
 --INTERSECT operatörü kullanılacağı sorguların, sütun sayıları eşit olmalıdır ve sütunlardaki veri tipleri eşleşmelidir.
 --INTERSECT operatörü bize kesişen veriler içerisindeki tekrar edenleri göstermez. Tekrar edenleri görmek için INTERSECT ALL kullanırız.
 ---ilk sorguda olan ancak 2. sorguda olmayan değerleri görmek istersek EXCEPT
+
+--HACKERRANK ÖRNEKLER--
+--Query the Name of any student in STUDENTS who scored higher than  Marks. Order your output by the last three characters of each name.
+SELECT NAME FROM STUDENTS 
+WHERE MARKS > 75
+ORDER BY RIGHT(NAME, 3) ASC, ID ASC
+--Son 3 harfe göre sıralamak için RIGHT (NAME,3) kullanırız.
+
+--Write a query that prints a list of employee names (i.e.: the name attribute) for employees in Employee having a salary greater than  per month
+--who have been employees for less than  months. Sort your result by ascending employee_id.
+SELECT name FROM employee
+WHERE salary > 2000 AND months <10
+ORDER BY employee_id ASC
+
+--Query the list of CITY names from STATION that do not start with vowels. Your result cannot contain duplicates.
+SELECT DISTINCT (city) FROM STATION
+WHERE NOT LEFT(CITY,1) IN ('a','e','i','o','u');
+
+--Query the list of CITY names from STATION that do not end with vowels. Your result cannot contain duplicates
+SELECT DISTINCT (CITY) FROM STATION
+WHERE NOT RIGHT (CITY,1)  IN ('a','e','i','o','u');
+
+--Sondan üç harfi,ilk harfi son harfi vb istenen sorgularda SUBSTR(string, start, length) kullanılabilir..
+
+Note: The position of the first character in the string is 1.
+
+1	2	3	4	5	6	7	8	9	10  11  12
+S	Q	L	 	T	u	t	o	r i 	a	 l
+Note: The position of the last character in the string is -1.
+
+-12	-11	-10	-9	-8	-7	-6	-5	-4	-3	-2	-1
+S	    Q  	L	 	  T	   u	 t	 o	 r	 i  	a	  l
+
+
+ -- Query the list of CITY names from STATION that either do not start with vowels or do not end with vowels. Your result cannot contain duplicates.
+SELECT DISTINCT city FROM station
+WHERE
+        SUBSTRING (city,1,1) NOT IN ('a','e','o','i','u')
+        OR
+        SUBSTRING (city,-1) NOT IN ('a','e','o','i','u');
