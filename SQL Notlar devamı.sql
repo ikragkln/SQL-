@@ -57,6 +57,8 @@ WHERE (book.id IS NULL OR author.id IS NULL);
 --UNION anahtar kelimesi sayesinde bu iki sorguyu da birleştirebiliriz.
 --Sütun sayıları aynı olması yanında bu sütunlardaki veri tiplerinin de aynı olması gerekmektedir.
 --UNION: Only distinct values (benzersiz verileri girer)  UNION ALL: duplicates values also(aynı verileri de alır)
+
+--Örneğin kitap ismine göre sıralama ve sayfa sayısı çoktan aza doğru sorgularının birleşimi;
 ( SELECT * FROM book
 ORDER BY title
 LIMIT 5
@@ -67,3 +69,26 @@ SELECT * FROM book
 ORDER BY page_number DESC
 LIMIT 5
 );
+
+--INTERSECT
+--İki sorgunun kesişimini almak için kullanılır.
+( SELECT * FROM book
+ORDER BY title
+LIMIT 5
+)
+INTERSECT
+(
+SELECT * FROM book
+ORDER BY page_number DESC
+LIMIT 5
+);
+
+--EXCEPT
+--Yukarıdaki ilk sorguda bulunan ancak 2. sorguda bulunmayan verileri gösterir.
+
+---birden fazla SELECT sorgusunu aynı tabloda birleştirmek istersek: UNION
+
+---kesişim :INTERSECT
+--INTERSECT operatörü kullanılacağı sorguların, sütun sayıları eşit olmalıdır ve sütunlardaki veri tipleri eşleşmelidir.
+--INTERSECT operatörü bize kesişen veriler içerisindeki tekrar edenleri göstermez. Tekrar edenleri görmek için INTERSECT ALL kullanırız.
+---ilk sorguda olan ancak 2. sorguda olmayan değerleri görmek istersek EXCEPT
