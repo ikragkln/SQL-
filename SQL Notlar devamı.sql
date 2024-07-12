@@ -127,6 +127,66 @@ S	    Q  	L	 	  T	   u	 t	 o	 r	 i  	a	  l
 
 
  -- Query the list of CITY names from STATION that either do not start with vowels or do not end with vowels. Your result cannot contain duplicates.
+
+ --Alt Sorgular (SUBQUERIES)
+--Statik bir değer yerine herhangi bir sorgu sonucunda elde ettiğimiz değeri bir başka sorgunun koşuluna yazarak alt sorgu oluşturabiliriz.
+--Önce parantez içindeki sorgu çalışır.
+--İlk 238'den büyük sayfa sayısına sahip kitapları sıralıyoruz.
+SELECT * FROM book
+WHERE page_number > 238;
+
+--Bu sorguda elde ettiğimiz ve sınır olarak seçtiğimiz sayıya ait kitabın ismini başka bir sorguda alt sorgu olarak  kullanabiliriz.(7 çıktı olmalı)
+SELECT * FROM book
+WHERE page_number > 
+(
+	SELECT page_number FROM book
+	WHERE title= 'Cutie Honey'
+);
+
+SELECT title,page_number,(SELECT MAX(page_number)FROM book) FROM book
+WHERE page_number >
+(
+	 SELECT page_number FROM book 
+		WHERE title = 'Cutie Honey'
+);
+
+--max sütununu sorguladığımız değerlerin ayrı ayrı farkını da almak istersek;
+SELECT title,page_number,(SELECT MAX(page_number)FROM book),((SELECT MAX(page_number)FROM book)- page_number) AS differ FROM book
+WHERE page_number >
+(
+	SELECT page_number FROM book 
+	WHERE title = 'Cutie Honey'
+);
+
+--ANY ve ALL
+--Alt sorgumuzda birden fazla koşul varsa koşullardan herhangi biri doğru olursa ANY o değerleri gösterir.Ancak ALL operatöründe sonuç alabilmek için tüm koşulların doğru olması gerekir
+SELECT first_name, last_name FROM author
+WHERE id= ANY 
+(
+	SELECT id FROM book
+	WHERE title= 'Cutie Honey' OR title= 'Father Sergius'
+);
+
+--id 40 ya da 41'den büyük değerleri (yani 41'den büyük değerleri ) göstermesi için; 
+SELECT first_name, last_name FROM author
+WHERE id > ANY
+(
+	SELECT id FROM book
+	WHERE title= 'Cutie Honey' OR title= 'Baby on Board'
+);
+
+--author'da id'si 42'den fazla değerleri sıralar (eğer iki koşul da doğruysa)
+SELECT first_name, last_name FROM author
+WHERE id > ALL
+(
+	SELECT id FROM book
+	WHERE title= 'Making Plans for Lena' OR title= 'Baby on Board'
+);
+
+
+
+
+
 SELECT DISTINCT city FROM station
 WHERE
         SUBSTRING (city,1,1) NOT IN ('a','e','o','i','u')
