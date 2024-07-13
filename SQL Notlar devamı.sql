@@ -159,7 +159,9 @@ WHERE page_number >
 );
 
 --ANY ve ALL
+--ANY:The ANY operator returns true if the comparison returns true for at least one of the values in the set, and false otherwise.
 --Alt sorgumuzda birden fazla koşul varsa koşullardan herhangi biri doğru olursa ANY o değerleri gösterir.Ancak ALL operatöründe sonuç alabilmek için tüm koşulların doğru olması gerekir
+--returns TRUE if ALL of the subquery values meet the conditio
 SELECT first_name, last_name FROM author
 WHERE id= ANY 
 (
@@ -182,8 +184,6 @@ WHERE id > ALL
 	SELECT id FROM book
 	WHERE title= 'Making Plans for Lena' OR title= 'Baby on Board'
 );
-
-
 
 
 
