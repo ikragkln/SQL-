@@ -185,10 +185,38 @@ WHERE id > ALL
 	WHERE title= 'Making Plans for Lena' OR title= 'Baby on Board'
 );
 
-
-
+--İlk ve son harfi sesli harflerle başlamayan şehirler için;
 SELECT DISTINCT city FROM station
 WHERE
         SUBSTRING (city,1,1) NOT IN ('a','e','o','i','u')
         OR
         SUBSTRING (city,-1) NOT IN ('a','e','o','i','u');
+
+--JOIN VE SUBQUERIES
+
+--bookstore veri tabanında kitap sayfası sayısı ortalama kitap sayfası sayısından
+--fazla olan kitapların isimlerini, bu kitapların yazarlarına ait isim ve soyisim bilgileriyle birlikte sıralayınız.
+SELECT author.first_name, author.last_name,page_number FROM author 
+INNER JOIN book ON author.id=book.author_id
+WHERE page_number >
+(
+	SELECT AVG(page_number) FROM book
+);
+
+--dvdrental veritabanında en uzun filmlerin isimlerini aktör isim ve soyisimleriyle birlikte sıralayalım
+SELECT actor.first_name, actor.last_name,film.title, film.length FROM actor
+INNER JOIN film_actor ON film_actor.actor_id=actor.actor_id 
+INNER JOIN film ON film.film_id=film_actor.film_id
+WHERE length= 
+(
+	SELECT MAX (length) FROM film
+);
+
+--Given the CITY and COUNTRY tables, query the names of all the continents (COUNTRY.Continent) and their respective 
+--average city populations (CITY.Population) rounded down to the nearest integer.
+SELECT COUNTRY.Continent, FLOOR( AVG(CITY.Population)) AS "AVERAGE POPULATION" FROM CITY
+INNER JOIN COUNTRY ON CITY.CountryCode = COUNTRY.Code
+GROUP BY COUNTRY.Continent
+ORDER BY "AVERAGE POPULATION";
+
+
