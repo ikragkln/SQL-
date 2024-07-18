@@ -123,7 +123,7 @@ S	Q	L	 	T	u	t	o	r i 	a	 l
 Note: The position of the last character in the string is -1.
 
 -12	-11	-10	-9	-8	-7	-6	-5	-4	-3	-2	-1
-S	    Q  	L	 	  T	   u	 t	 o	 r	 i  	a	  l
+ S	 Q  	  L	 	 T	  u	 t	 o	 r	 i  	 a	 l
 
 
  -- Query the list of CITY names from STATION that either do not start with vowels or do not end with vowels. Your result cannot contain duplicates.
