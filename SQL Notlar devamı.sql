@@ -125,6 +125,17 @@ Note: The position of the last character in the string is -1.
 -12	-11	-10	-9	-8	-7	-6	-5	-4	-3	-2	-1
  S	 Q  	  L	 	 T	  u	 t	 o	 r	 i  	 a	 l
 
+--Query the list of CITY names ending with vowels (a, e, i, o, u) from STATION. Your result cannot contain duplicates.
+SELECT DISTINCT(CITY) FROM STATION
+WHERE SUBSTRING(CITY,-1,1) IN ('a','e','i','o','u')
+
+--Query the list of CITY names from STATION which have vowels (i.e., a, e, i, o, and u) as both their first and last characters. Your result cannot contain duplicates.
+SELECT DISTINCT(CITY) FROM STATION
+WHERE SUBSTRING(CITY,-1,1) IN ('a','e','i','o','u') AND SUBSTRING(CITY,1,1) IN ('a','e','i','o','u') ;
+
+--LENGTH
+--The LENGTH() function returns the length of a string (in bytes)
+
 
  -- Query the list of CITY names from STATION that either do not start with vowels or do not end with vowels. Your result cannot contain duplicates.
 
